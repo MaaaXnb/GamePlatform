@@ -12,9 +12,5 @@ class GamePlatformSystemApplicationTests {
 	void contextLoads() {
 	}
 
-	@Test void appHasAGreeting() {
-		GamePlatformSystemApplication classUnderTest = new GamePlatformSystemApplication();
-		assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
-	}
 
 }
