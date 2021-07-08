@@ -4,8 +4,8 @@ package Model;/*PLEASE DO NOT EDIT THIS CODE*/
 
 import java.util.*;
 
-// line 24 "model.ump"
-// line 72 "model.ump"
+// line 25 "model.ump"
+// line 77 "model.ump"
 public class User
 {
 
@@ -18,6 +18,7 @@ public class User
   private String password;
   private String nickname;
   private List friendList;
+  private int userID;
 
   //User Associations
   private GamePlatformSystem gamePlatformSystem;
@@ -29,12 +30,13 @@ public class User
   // CONSTRUCTOR
   //------------------------
 
-  public User(String aUsername, String aPassword, String aNickname, List aFriendList, GamePlatformSystem aGamePlatformSystem)
+  public User(String aUsername, String aPassword, String aNickname, List aFriendList, int aUserID, GamePlatformSystem aGamePlatformSystem)
   {
     username = aUsername;
     password = aPassword;
     nickname = aNickname;
     friendList = aFriendList;
+    userID = aUserID;
     boolean didAddGamePlatformSystem = setGamePlatformSystem(aGamePlatformSystem);
     if (!didAddGamePlatformSystem)
     {
@@ -79,6 +81,14 @@ public class User
     return wasSet;
   }
 
+  public boolean setUserID(int aUserID)
+  {
+    boolean wasSet = false;
+    userID = aUserID;
+    wasSet = true;
+    return wasSet;
+  }
+
   public String getUsername()
   {
     return username;
@@ -97,6 +107,11 @@ public class User
   public List getFriendList()
   {
     return friendList;
+  }
+
+  public int getUserID()
+  {
+    return userID;
   }
   /* Code from template association_GetOne */
   public GamePlatformSystem getGamePlatformSystem()
@@ -315,10 +330,11 @@ public class User
     return super.toString() + "["+
             "username" + ":" + getUsername()+ "," +
             "password" + ":" + getPassword()+ "," +
-            "nickname" + ":" + getNickname()+ "]" + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "friendList" + "=" + (getFriendList() != null ? !getFriendList().equals(this)  ? getFriendList().toString().replaceAll("  ","    ") : "this" : "null") + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "gamePlatformSystem = "+(getGamePlatformSystem()!=null?Integer.toHexString(java.lang.System.identityHashCode(getGamePlatformSystem())):"null") + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "room = "+(getRoom()!=null?Integer.toHexString(java.lang.System.identityHashCode(getRoom())):"null") + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "hostRoom = "+(getHostRoom()!=null?Integer.toHexString(java.lang.System.identityHashCode(getHostRoom())):"null");
+            "nickname" + ":" + getNickname()+ "," +
+            "userID" + ":" + getUserID()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "friendList" + "=" + (getFriendList() != null ? !getFriendList().equals(this)  ? getFriendList().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "gamePlatformSystem = "+(getGamePlatformSystem()!=null?Integer.toHexString(System.identityHashCode(getGamePlatformSystem())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "room = "+(getRoom()!=null?Integer.toHexString(System.identityHashCode(getRoom())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "hostRoom = "+(getHostRoom()!=null?Integer.toHexString(System.identityHashCode(getHostRoom())):"null");
   }
 }

@@ -4,8 +4,8 @@ package Model;/*PLEASE DO NOT EDIT THIS CODE*/
 
 import java.util.*;
 
-// line 7 "model.ump"
-// line 55 "model.ump"
+// line 8 "model.ump"
+// line 65 "model.ump"
 public class Room
 {
 
@@ -14,7 +14,7 @@ public class Room
   //------------------------
 
   //Room Attributes
-  private String roomID;
+  private int roomID;
   private int maxPlayer;
   private String gameMode;
   private boolean isPublic;
@@ -31,7 +31,7 @@ public class Room
   // CONSTRUCTOR
   //------------------------
 
-  public Room(String aRoomID, int aMaxPlayer, String aGameMode, boolean aIsPublic, int aPasswordForRoom, User aHost, GamePlatformSystem aGamePlatformSystem, ChatBox aChatBox)
+  public Room(int aRoomID, int aMaxPlayer, String aGameMode, boolean aIsPublic, int aPasswordForRoom, User aHost, GamePlatformSystem aGamePlatformSystem, ChatBox aChatBox)
   {
     roomID = aRoomID;
     maxPlayer = aMaxPlayer;
@@ -53,7 +53,7 @@ public class Room
     chatBox = aChatBox;
   }
 
-  public Room(String aRoomID, int aMaxPlayer, String aGameMode, boolean aIsPublic, int aPasswordForRoom, User aHost, GamePlatformSystem aGamePlatformSystem)
+  public Room(int aRoomID, int aMaxPlayer, String aGameMode, boolean aIsPublic, int aPasswordForRoom, User aHost, GamePlatformSystem aGamePlatformSystem, int aChatBoxIDForChatBox)
   {
     roomID = aRoomID;
     maxPlayer = aMaxPlayer;
@@ -68,14 +68,14 @@ public class Room
     {
       throw new RuntimeException("Unable to create room due to gamePlatformSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    chatBox = new ChatBox(this);
+    chatBox = new ChatBox(aChatBoxIDForChatBox, this);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setRoomID(String aRoomID)
+  public boolean setRoomID(int aRoomID)
   {
     boolean wasSet = false;
     roomID = aRoomID;
@@ -123,7 +123,7 @@ public class Room
     return wasSet;
   }
 
-  public String getRoomID()
+  public int getRoomID()
   {
     return roomID;
   }
@@ -421,9 +421,9 @@ public class Room
             "maxPlayer" + ":" + getMaxPlayer()+ "," +
             "gameMode" + ":" + getGameMode()+ "," +
             "isPublic" + ":" + getIsPublic()+ "," +
-            "passwordForRoom" + ":" + getPasswordForRoom()+ "]" + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "host" + "=" + (getHost() != null ? !getHost().equals(this)  ? getHost().toString().replaceAll("  ","    ") : "this" : "null") + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "gamePlatformSystem = "+(getGamePlatformSystem()!=null?Integer.toHexString(java.lang.System.identityHashCode(getGamePlatformSystem())):"null") + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "chatBox = "+(getChatBox()!=null?Integer.toHexString(java.lang.System.identityHashCode(getChatBox())):"null");
+            "passwordForRoom" + ":" + getPasswordForRoom()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "host" + "=" + (getHost() != null ? !getHost().equals(this)  ? getHost().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "gamePlatformSystem = "+(getGamePlatformSystem()!=null?Integer.toHexString(System.identityHashCode(getGamePlatformSystem())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "chatBox = "+(getChatBox()!=null?Integer.toHexString(System.identityHashCode(getChatBox())):"null");
   }
 }

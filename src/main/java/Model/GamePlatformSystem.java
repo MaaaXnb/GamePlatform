@@ -5,13 +5,16 @@ package Model;/*PLEASE DO NOT EDIT THIS CODE*/
 import java.util.*;
 
 // line 2 "model.ump"
-// line 95 "model.ump"
+// line 59 "model.ump"
 public class GamePlatformSystem
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
+
+  //GamePlatformSystem Attributes
+  private int systemID;
 
   //GamePlatformSystem Associations
   private List<User> users;
@@ -21,8 +24,9 @@ public class GamePlatformSystem
   // CONSTRUCTOR
   //------------------------
 
-  public GamePlatformSystem()
+  public GamePlatformSystem(int aSystemID)
   {
+    systemID = aSystemID;
     users = new ArrayList<User>();
     rooms = new ArrayList<Room>();
   }
@@ -30,6 +34,19 @@ public class GamePlatformSystem
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setSystemID(int aSystemID)
+  {
+    boolean wasSet = false;
+    systemID = aSystemID;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public int getSystemID()
+  {
+    return systemID;
+  }
   /* Code from template association_GetMany */
   public User getUser(int index)
   {
@@ -96,9 +113,9 @@ public class GamePlatformSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public User addUser(String aUsername, String aPassword, String aNickname, List aFriendList)
+  public User addUser(String aUsername, String aPassword, String aNickname, List aFriendList, int aUserID)
   {
-    return new User(aUsername, aPassword, aNickname, aFriendList, this);
+    return new User(aUsername, aPassword, aNickname, aFriendList, aUserID, this);
   }
 
   public boolean addUser(User aUser)
@@ -168,7 +185,7 @@ public class GamePlatformSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Room addRoom(String aRoomID, int aMaxPlayer, String aGameMode, boolean aIsPublic, int aPasswordForRoom, User aHost, ChatBox aChatBox)
+  public Room addRoom(int aRoomID, int aMaxPlayer, String aGameMode, boolean aIsPublic, int aPasswordForRoom, User aHost, ChatBox aChatBox)
   {
     return new Room(aRoomID, aMaxPlayer, aGameMode, aIsPublic, aPasswordForRoom, aHost, this, aChatBox);
   }
@@ -253,4 +270,10 @@ public class GamePlatformSystem
     
   }
 
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "systemID" + ":" + getSystemID()+ "]";
+  }
 }

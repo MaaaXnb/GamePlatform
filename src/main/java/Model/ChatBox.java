@@ -5,14 +5,17 @@ package Model;/*PLEASE DO NOT EDIT THIS CODE*/
 import java.util.*;
 import java.sql.Time;
 
-// line 37 "model.ump"
-// line 82 "model.ump"
+// line 39 "model.ump"
+// line 87 "model.ump"
 public class ChatBox
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
+
+  //ChatBox Attributes
+  private int chatBoxID;
 
   //ChatBox Associations
   private Room room;
@@ -22,8 +25,9 @@ public class ChatBox
   // CONSTRUCTOR
   //------------------------
 
-  public ChatBox(Room aRoom)
+  public ChatBox(int aChatBoxID, Room aRoom)
   {
+    chatBoxID = aChatBoxID;
     if (aRoom == null || aRoom.getChatBox() != null)
     {
       throw new RuntimeException("Unable to create ChatBox due to aRoom. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
@@ -32,8 +36,9 @@ public class ChatBox
     messages = new ArrayList<Message>();
   }
 
-  public ChatBox(String aRoomIDForRoom, int aMaxPlayerForRoom, String aGameModeForRoom, boolean aIsPublicForRoom, int aPasswordForRoomForRoom, User aHostForRoom, GamePlatformSystem aGamePlatformSystemForRoom)
+  public ChatBox(int aChatBoxID, int aRoomIDForRoom, int aMaxPlayerForRoom, String aGameModeForRoom, boolean aIsPublicForRoom, int aPasswordForRoomForRoom, User aHostForRoom, GamePlatformSystem aGamePlatformSystemForRoom)
   {
+    chatBoxID = aChatBoxID;
     room = new Room(aRoomIDForRoom, aMaxPlayerForRoom, aGameModeForRoom, aIsPublicForRoom, aPasswordForRoomForRoom, aHostForRoom, aGamePlatformSystemForRoom, this);
     messages = new ArrayList<Message>();
   }
@@ -41,6 +46,19 @@ public class ChatBox
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setChatBoxID(int aChatBoxID)
+  {
+    boolean wasSet = false;
+    chatBoxID = aChatBoxID;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public int getChatBoxID()
+  {
+    return chatBoxID;
+  }
   /* Code from template association_GetOne */
   public Room getRoom()
   {
@@ -82,9 +100,9 @@ public class ChatBox
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Message addMessage(Time aTime, String aContent, Enum aMessageType)
+  public Message addMessage(Time aTime, String aContent, messageType aMessageType, int aMessageID)
   {
-    return new Message(aTime, aContent, aMessageType, this);
+    return new Message(aTime, aContent, aMessageType, aMessageID, this);
   }
 
   public boolean addMessage(Message aMessage)
@@ -164,4 +182,11 @@ public class ChatBox
     }
   }
 
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "chatBoxID" + ":" + getChatBoxID()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "room = "+(getRoom()!=null?Integer.toHexString(System.identityHashCode(getRoom())):"null");
+  }
 }

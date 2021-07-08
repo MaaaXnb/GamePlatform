@@ -4,8 +4,8 @@ package Model;/*PLEASE DO NOT EDIT THIS CODE*/
 
 import java.sql.Time;
 
-// line 43 "model.ump"
-// line 89 "model.ump"
+// line 46 "model.ump"
+// line 93 "model.ump"
 public class Message
 {
 
@@ -16,7 +16,8 @@ public class Message
   //Message Attributes
   private Time time;
   private String content;
-  private Enum messageType;
+  private messageType messageType;
+  private int messageID;
 
   //Message Associations
   private User user;
@@ -26,11 +27,12 @@ public class Message
   // CONSTRUCTOR
   //------------------------
 
-  public Message(Time aTime, String aContent, Enum aMessageType, ChatBox aChatBox)
+  public Message(Time aTime, String aContent, messageType aMessageType, int aMessageID, ChatBox aChatBox)
   {
     time = aTime;
     content = aContent;
     messageType = aMessageType;
+    messageID = aMessageID;
     boolean didAddChatBox = setChatBox(aChatBox);
     if (!didAddChatBox)
     {
@@ -58,10 +60,18 @@ public class Message
     return wasSet;
   }
 
-  public boolean setMessageType(Enum aMessageType)
+  public boolean setMessageType(messageType aMessageType)
   {
     boolean wasSet = false;
     messageType = aMessageType;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setMessageID(int aMessageID)
+  {
+    boolean wasSet = false;
+    messageID = aMessageID;
     wasSet = true;
     return wasSet;
   }
@@ -76,9 +86,14 @@ public class Message
     return content;
   }
 
-  public Enum getMessageType()
+  public messageType getMessageType()
   {
     return messageType;
+  }
+
+  public int getMessageID()
+  {
+    return messageID;
   }
   /* Code from template association_GetOne */
   public User getUser()
@@ -153,10 +168,11 @@ public class Message
   public String toString()
   {
     return super.toString() + "["+
-            "content" + ":" + getContent()+ "]" + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "time" + "=" + (getTime() != null ? !getTime().equals(this)  ? getTime().toString().replaceAll("  ","    ") : "this" : "null") + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "messageType" + "=" + (getMessageType() != null ? !getMessageType().equals(this)  ? getMessageType().toString().replaceAll("  ","    ") : "this" : "null") + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "user = "+(getUser()!=null?Integer.toHexString(java.lang.System.identityHashCode(getUser())):"null") + java.lang.System.getProperties().getProperty("line.separator") +
-            "  " + "chatBox = "+(getChatBox()!=null?Integer.toHexString(java.lang.System.identityHashCode(getChatBox())):"null");
+            "content" + ":" + getContent()+ "," +
+            "messageID" + ":" + getMessageID()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "time" + "=" + (getTime() != null ? !getTime().equals(this)  ? getTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "messageType" + "=" + (getMessageType() != null ? !getMessageType().equals(this)  ? getMessageType().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "user = "+(getUser()!=null?Integer.toHexString(System.identityHashCode(getUser())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "chatBox = "+(getChatBox()!=null?Integer.toHexString(System.identityHashCode(getChatBox())):"null");
   }
 }
