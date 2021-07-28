@@ -5,17 +5,13 @@ package Model;/*PLEASE DO NOT EDIT THIS CODE*/
 import java.util.*;
 import java.sql.Time;
 
-// line 39 "model.ump"
-// line 87 "model.ump"
+
 public class ChatBox
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
-
-  //ChatBox Attributes
-  private int chatBoxID;
 
   //ChatBox Associations
   private Room room;
@@ -25,21 +21,13 @@ public class ChatBox
   // CONSTRUCTOR
   //------------------------
 
-  public ChatBox(int aChatBoxID, Room aRoom)
+  public ChatBox(Room aRoom)
   {
-    chatBoxID = aChatBoxID;
     if (aRoom == null || aRoom.getChatBox() != null)
     {
-      throw new RuntimeException("Unable to create ChatBox due to aRoom. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create ChatBox due to aRoom.");
     }
     room = aRoom;
-    messages = new ArrayList<Message>();
-  }
-
-  public ChatBox(int aChatBoxID, int aRoomIDForRoom, int aMaxPlayerForRoom, String aGameModeForRoom, boolean aIsPublicForRoom, int aPasswordForRoomForRoom, User aHostForRoom, GamePlatformSystem aGamePlatformSystemForRoom)
-  {
-    chatBoxID = aChatBoxID;
-    room = new Room(aRoomIDForRoom, aMaxPlayerForRoom, aGameModeForRoom, aIsPublicForRoom, aPasswordForRoomForRoom, aHostForRoom, aGamePlatformSystemForRoom, this);
     messages = new ArrayList<Message>();
   }
 
@@ -47,19 +35,6 @@ public class ChatBox
   // INTERFACE
   //------------------------
 
-  public boolean setChatBoxID(int aChatBoxID)
-  {
-    boolean wasSet = false;
-    chatBoxID = aChatBoxID;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public int getChatBoxID()
-  {
-    return chatBoxID;
-  }
-  /* Code from template association_GetOne */
   public Room getRoom()
   {
     return room;
@@ -102,7 +77,7 @@ public class ChatBox
   /* Code from template association_AddManyToOne */
   public Message addMessage(Time aTime, String aContent, messageType aMessageType, int aMessageID)
   {
-    return new Message(aTime, aContent, aMessageType, aMessageID, this);
+    return new Message(aTime, aContent, aMessageType, this);
   }
 
   public boolean addMessage(Message aMessage)
@@ -136,7 +111,7 @@ public class ChatBox
   }
   /* Code from template association_AddIndexControlFunctions */
   public boolean addMessageAt(Message aMessage, int index)
-  {  
+  {
     boolean wasAdded = false;
     if(addMessage(aMessage))
     {
@@ -145,24 +120,6 @@ public class ChatBox
       messages.remove(aMessage);
       messages.add(index, aMessage);
       wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveMessageAt(Message aMessage, int index)
-  {
-    boolean wasAdded = false;
-    if(messages.contains(aMessage))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfMessages()) { index = numberOfMessages() - 1; }
-      messages.remove(aMessage);
-      messages.add(index, aMessage);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addMessageAt(aMessage, index);
     }
     return wasAdded;
   }
@@ -180,13 +137,5 @@ public class ChatBox
       Message aMessage = messages.get(i - 1);
       aMessage.delete();
     }
-  }
-
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "chatBoxID" + ":" + getChatBoxID()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "room = "+(getRoom()!=null?Integer.toHexString(System.identityHashCode(getRoom())):"null");
   }
 }

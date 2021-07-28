@@ -4,8 +4,6 @@ package Model;/*PLEASE DO NOT EDIT THIS CODE*/
 
 import java.util.*;
 
-// line 2 "model.ump"
-// line 59 "model.ump"
 public class GamePlatformSystem
 {
 
@@ -13,8 +11,6 @@ public class GamePlatformSystem
   // MEMBER VARIABLES
   //------------------------
 
-  //GamePlatformSystem Attributes
-  private int systemID;
 
   //GamePlatformSystem Associations
   private List<User> users;
@@ -24,9 +20,8 @@ public class GamePlatformSystem
   // CONSTRUCTOR
   //------------------------
 
-  public GamePlatformSystem(int aSystemID)
+  public GamePlatformSystem()
   {
-    systemID = aSystemID;
     users = new ArrayList<User>();
     rooms = new ArrayList<Room>();
   }
@@ -35,29 +30,10 @@ public class GamePlatformSystem
   // INTERFACE
   //------------------------
 
-  public boolean setSystemID(int aSystemID)
-  {
-    boolean wasSet = false;
-    systemID = aSystemID;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public int getSystemID()
-  {
-    return systemID;
-  }
-  /* Code from template association_GetMany */
-  public User getUser(int index)
-  {
-    User aUser = users.get(index);
-    return aUser;
-  }
 
   public List<User> getUsers()
   {
-    List<User> newUsers = Collections.unmodifiableList(users);
-    return newUsers;
+    return users;
   }
 
   public int numberOfUsers()
@@ -113,9 +89,9 @@ public class GamePlatformSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public User addUser(String aUsername, String aPassword, String aNickname, List aFriendList, int aUserID)
+  public User addUser(String aUsername, String aPassword, String aNickname)
   {
-    return new User(aUsername, aPassword, aNickname, aFriendList, aUserID, this);
+    return new User(aUsername, aPassword, aNickname, new ArrayList<User>(), this);
   }
 
   public boolean addUser(User aUser)
@@ -185,9 +161,9 @@ public class GamePlatformSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Room addRoom(int aRoomID, int aMaxPlayer, String aGameMode, boolean aIsPublic, int aPasswordForRoom, User aHost, ChatBox aChatBox)
+  public Room addRoom(int aMaxPlayer, String aGameMode, boolean aIsPublic, int aPasswordForRoom, User aHost, ChatBox aChatBox)
   {
-    return new Room(aRoomID, aMaxPlayer, aGameMode, aIsPublic, aPasswordForRoom, aHost, this, aChatBox);
+    return new Room(aMaxPlayer, aGameMode, aIsPublic, aPasswordForRoom, aHost, this);
   }
 
   public boolean addRoom(Room aRoom)
@@ -268,12 +244,5 @@ public class GamePlatformSystem
       rooms.remove(aRoom);
     }
     
-  }
-
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "systemID" + ":" + getSystemID()+ "]";
   }
 }

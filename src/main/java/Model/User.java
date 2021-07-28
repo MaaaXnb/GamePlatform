@@ -4,8 +4,6 @@ package Model;/*PLEASE DO NOT EDIT THIS CODE*/
 
 import java.util.*;
 
-// line 25 "model.ump"
-// line 77 "model.ump"
 public class User
 {
 
@@ -17,26 +15,24 @@ public class User
   private String username;
   private String password;
   private String nickname;
-  private List friendList;
-  private int userID;
+  private List<User> friendList;
 
   //User Associations
   private GamePlatformSystem gamePlatformSystem;
   private Room room;
-  private Room hostRoom;
   private List<Message> messages;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public User(String aUsername, String aPassword, String aNickname, List aFriendList, int aUserID, GamePlatformSystem aGamePlatformSystem)
+  public User(String aUsername, String aPassword, String aNickname, List<User> aFriendList, GamePlatformSystem aGamePlatformSystem)
   {
     username = aUsername;
     password = aPassword;
     nickname = aNickname;
-    friendList = aFriendList;
-    userID = aUserID;
+    if (aFriendList == null) friendList = new ArrayList<>();
+    else friendList = aFriendList;
     boolean didAddGamePlatformSystem = setGamePlatformSystem(aGamePlatformSystem);
     if (!didAddGamePlatformSystem)
     {
@@ -81,14 +77,6 @@ public class User
     return wasSet;
   }
 
-  public boolean setUserID(int aUserID)
-  {
-    boolean wasSet = false;
-    userID = aUserID;
-    wasSet = true;
-    return wasSet;
-  }
-
   public String getUsername()
   {
     return username;
@@ -109,10 +97,6 @@ public class User
     return friendList;
   }
 
-  public int getUserID()
-  {
-    return userID;
-  }
   /* Code from template association_GetOne */
   public GamePlatformSystem getGamePlatformSystem()
   {
@@ -129,17 +113,7 @@ public class User
     boolean has = room != null;
     return has;
   }
-  /* Code from template association_GetOne */
-  public Room getHostRoom()
-  {
-    return hostRoom;
-  }
 
-  public boolean hasHostRoom()
-  {
-    boolean has = hostRoom != null;
-    return has;
-  }
   /* Code from template association_GetMany */
   public Message getMessage(int index)
   {
@@ -206,23 +180,6 @@ public class User
     wasSet = true;
     return wasSet;
   }
-  /* Code from template association_SetOptionalOneToMany */
-  public boolean setHostRoom(Room aHostRoom)
-  {
-    boolean wasSet = false;
-    Room existingHostRoom = hostRoom;
-    hostRoom = aHostRoom;
-    if (existingHostRoom != null && !existingHostRoom.equals(aHostRoom))
-    {
-      existingHostRoom.removeHostUser(this);
-    }
-    if (aHostRoom != null)
-    {
-      aHostRoom.addHostUser(this);
-    }
-    wasSet = true;
-    return wasSet;
-  }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfMessages()
   {
@@ -262,38 +219,6 @@ public class User
     }
     return wasRemoved;
   }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addMessageAt(Message aMessage, int index)
-  {  
-    boolean wasAdded = false;
-    if(addMessage(aMessage))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfMessages()) { index = numberOfMessages() - 1; }
-      messages.remove(aMessage);
-      messages.add(index, aMessage);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveMessageAt(Message aMessage, int index)
-  {
-    boolean wasAdded = false;
-    if(messages.contains(aMessage))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfMessages()) { index = numberOfMessages() - 1; }
-      messages.remove(aMessage);
-      messages.add(index, aMessage);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addMessageAt(aMessage, index);
-    }
-    return wasAdded;
-  }
 
   public void delete()
   {
@@ -309,12 +234,6 @@ public class User
       this.room = null;
       placeholderRoom.removeUser(this);
     }
-    if (hostRoom != null)
-    {
-      Room placeholderHostRoom = hostRoom;
-      this.hostRoom = null;
-      placeholderHostRoom.removeHostUser(this);
-    }
     while (messages.size() > 0)
     {
       Message aMessage = messages.get(messages.size() - 1);
@@ -324,17 +243,4 @@ public class User
     
   }
 
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "username" + ":" + getUsername()+ "," +
-            "password" + ":" + getPassword()+ "," +
-            "nickname" + ":" + getNickname()+ "," +
-            "userID" + ":" + getUserID()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "friendList" + "=" + (getFriendList() != null ? !getFriendList().equals(this)  ? getFriendList().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "gamePlatformSystem = "+(getGamePlatformSystem()!=null?Integer.toHexString(System.identityHashCode(getGamePlatformSystem())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "room = "+(getRoom()!=null?Integer.toHexString(System.identityHashCode(getRoom())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "hostRoom = "+(getHostRoom()!=null?Integer.toHexString(System.identityHashCode(getHostRoom())):"null");
-  }
 }

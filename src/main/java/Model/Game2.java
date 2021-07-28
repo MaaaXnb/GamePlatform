@@ -4,8 +4,6 @@ package Model;/*PLEASE DO NOT EDIT THIS CODE*/
 
 import java.util.*;
 
-// line 34 "model.ump"
-// line 82 "model.ump"
 public class Game2 extends Room
 {
 
@@ -17,9 +15,9 @@ public class Game2 extends Room
   // CONSTRUCTOR
   //------------------------
 
-  public Game2(int aRoomID, int aMaxPlayer, String aGameMode, boolean aIsPublic, int aPasswordForRoom, User aHost, GamePlatformSystem aGamePlatformSystem, ChatBox aChatBox)
+  public Game2(int aMaxPlayer, String aGameMode, boolean aIsPublic, int aPasswordForRoom, User aHost, GamePlatformSystem aGamePlatformSystem)
   {
-    super(aRoomID, aMaxPlayer, aGameMode, aIsPublic, aPasswordForRoom, aHost, aGamePlatformSystem, aChatBox);
+    super(aMaxPlayer, aGameMode, aIsPublic, aPasswordForRoom, aHost, aGamePlatformSystem);
   }
 
   //------------------------

@@ -3,9 +3,8 @@ package Model;/*PLEASE DO NOT EDIT THIS CODE*/
 
 
 import java.sql.Time;
+import java.util.UUID;
 
-// line 46 "model.ump"
-// line 93 "model.ump"
 public class Message
 {
 
@@ -17,7 +16,6 @@ public class Message
   private Time time;
   private String content;
   private messageType messageType;
-  private int messageID;
 
   //Message Associations
   private User user;
@@ -27,16 +25,15 @@ public class Message
   // CONSTRUCTOR
   //------------------------
 
-  public Message(Time aTime, String aContent, messageType aMessageType, int aMessageID, ChatBox aChatBox)
+  public Message(Time aTime, String aContent, messageType aMessageType, ChatBox aChatBox)
   {
     time = aTime;
     content = aContent;
     messageType = aMessageType;
-    messageID = aMessageID;
     boolean didAddChatBox = setChatBox(aChatBox);
     if (!didAddChatBox)
     {
-      throw new RuntimeException("Unable to create message due to chatBox. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create message due to chatBox.");
     }
   }
 
@@ -44,36 +41,19 @@ public class Message
   // INTERFACE
   //------------------------
 
-  public boolean setTime(Time aTime)
+  public void setTime(Time aTime)
   {
-    boolean wasSet = false;
     time = aTime;
-    wasSet = true;
-    return wasSet;
   }
 
-  public boolean setContent(String aContent)
+  public void setContent(String aContent)
   {
-    boolean wasSet = false;
     content = aContent;
-    wasSet = true;
-    return wasSet;
   }
 
-  public boolean setMessageType(messageType aMessageType)
+  public void setMessageType(messageType aMessageType)
   {
-    boolean wasSet = false;
     messageType = aMessageType;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setMessageID(int aMessageID)
-  {
-    boolean wasSet = false;
-    messageID = aMessageID;
-    wasSet = true;
-    return wasSet;
   }
 
   public Time getTime()
@@ -91,61 +71,39 @@ public class Message
     return messageType;
   }
 
-  public int getMessageID()
-  {
-    return messageID;
-  }
-  /* Code from template association_GetOne */
+
   public User getUser()
   {
     return user;
   }
 
-  public boolean hasUser()
-  {
-    boolean has = user != null;
-    return has;
-  }
-  /* Code from template association_GetOne */
   public ChatBox getChatBox()
   {
     return chatBox;
   }
-  /* Code from template association_SetOptionalOneToMany */
+
   public boolean setUser(User aUser)
   {
-    boolean wasSet = false;
     User existingUser = user;
     user = aUser;
-    if (existingUser != null && !existingUser.equals(aUser))
-    {
-      existingUser.removeMessage(this);
-    }
+    if (existingUser != null && !existingUser.equals(aUser)) return false;
     if (aUser != null)
     {
       aUser.addMessage(this);
+      return true;
     }
-    wasSet = true;
-    return wasSet;
+    return false;
   }
   /* Code from template association_SetOneToMany */
   public boolean setChatBox(ChatBox aChatBox)
   {
-    boolean wasSet = false;
-    if (aChatBox == null)
-    {
-      return wasSet;
-    }
+    if (aChatBox == null) return false;
 
     ChatBox existingChatBox = chatBox;
     chatBox = aChatBox;
-    if (existingChatBox != null && !existingChatBox.equals(aChatBox))
-    {
-      existingChatBox.removeMessage(this);
-    }
+    if (existingChatBox != null && !existingChatBox.equals(aChatBox)) return false;
     chatBox.addMessage(this);
-    wasSet = true;
-    return wasSet;
+    return true;
   }
 
   public void delete()
@@ -162,17 +120,5 @@ public class Message
     {
       placeholderChatBox.removeMessage(this);
     }
-  }
-
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "content" + ":" + getContent()+ "," +
-            "messageID" + ":" + getMessageID()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "time" + "=" + (getTime() != null ? !getTime().equals(this)  ? getTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "messageType" + "=" + (getMessageType() != null ? !getMessageType().equals(this)  ? getMessageType().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "user = "+(getUser()!=null?Integer.toHexString(System.identityHashCode(getUser())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "chatBox = "+(getChatBox()!=null?Integer.toHexString(System.identityHashCode(getChatBox())):"null");
   }
 }
