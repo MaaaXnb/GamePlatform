@@ -8,7 +8,7 @@ import java.util.Properties;
 public class MySQLUtils {
     private static final String INSTANCE = "us-cdbr-east-04.cleardb.com";
     private static final String PORT_NUM = "3306";
-    private static final String DB_NAME = "gamePlatform";
+    private static final String DB_NAME = "heroku_8f284e9fa0bc4a5";
     public static String getMySQLAddress() throws IOException {
         Properties prop = new Properties();
         String propFileName = "application.properties";
