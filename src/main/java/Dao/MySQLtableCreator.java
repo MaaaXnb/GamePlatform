@@ -48,14 +48,6 @@ public class MySQLtableCreator {
                     + ")";
             statement.executeUpdate(sql);
 
-            sql = "CREATE TABLE chat_box ("
-                    + "id INT AUTO_INCREMENT,"
-                    + "room_id INT NOT NULL,"
-                    + "PRIMARY KEY (id),"
-                    + "FOREIGN KEY (room_id) REFERENCES rooms(id)"
-                    + ")";
-            statement.executeUpdate(sql);
-
             sql = "CREATE TABLE friend_list ("
                     + "userA_id INT NOT NULL,"
                     + "userB_id INT NOT NULL,"
@@ -68,13 +60,20 @@ public class MySQLtableCreator {
             sql = "CREATE TABLE message ("
                     + "id INT AUTO_INCREMENT,"
                     + "user_id INT NOT NULL,"
-                    + "chat_room_id INT NOT NULL,"
                     + "content VARCHAR(255) NOT NULL,"
                     + "type VARCHAR(255) NOT NULL,"
                     + "set_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
                     + "PRIMARY KEY (id),"
-                    + "FOREIGN KEY (user_id) REFERENCES users(id),"
-                    + "FOREIGN KEY (chat_room_id) REFERENCES chat_box(id)"
+                    + "FOREIGN KEY (user_id) REFERENCES users(id)"
+                    + ")";
+            statement.executeUpdate(sql);
+
+            sql = "CREATE TABLE chat_box ("
+                    + "room_id INT NOT NULL,"
+                    + "message_id INT NOT NULL,"
+                    + "PRIMARY KEY (room_id, message_id),"
+                    + "FOREIGN KEY (message_id) REFERENCES message(id),"
+                    + "FOREIGN KEY (room_id) REFERENCES rooms(id)"
                     + ")";
             statement.executeUpdate(sql);
 
